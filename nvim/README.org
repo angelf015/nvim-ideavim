@@ -1,0 +1,7 @@
+
+* Nvim configuration for Java/SpringBoot and Javascript/Typescript development
+
+** Requirements
+   - Neovim 0.9.4 or later
+   - rd
+   - ripgrep

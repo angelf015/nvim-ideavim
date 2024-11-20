@@ -22,11 +22,6 @@ return {
                     "jdtls",
                     "cssls",
                     "angularls",
-                    "stylua",
-                    "selene",
-                    "luacheck",
-                    "shellcheck",
-                    "shfmt",
                     "tailwindcss",
                 },
             })
