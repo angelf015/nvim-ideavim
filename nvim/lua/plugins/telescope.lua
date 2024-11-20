@@ -12,6 +12,11 @@ return {
                 { "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true },
             },
         },
+        defaults = {
+            file_ignore_patterns = {
+                "node_modules", "%.git/"
+            },
+        },
         config = function()
             -- get access to telescopes built in functions
             local builtin = require('telescope.builtin')
@@ -61,7 +66,7 @@ return {
                     vimgrep_arguments = {
                         "rg",
                         "--color=never",
-                        "--no-heading",
+                        "--no-heaeding",
                         "--with-filename",
                         "--line-number",
                         "--column",

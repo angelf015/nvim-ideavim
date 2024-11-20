@@ -79,3 +79,4 @@ vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up",
 
 -- vim.keymap.set("n", "gc", "<nop>")
 -- vim.keymap.set("n", "gb", "<nop>")
+

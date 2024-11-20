@@ -16,7 +16,19 @@ return {
         config = function()
             -- ensure that we have lua language server, typescript launguage server, java language server, and java test language server are installed
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "tsserver", "jdtls", "cssls", "angularls" },
+                ensure_installed = {
+                    "lua_ls",
+                    "ts_ls",
+                    "jdtls",
+                    "cssls",
+                    "angularls",
+                    "stylua",
+                    "selene",
+                    "luacheck",
+                    "shellcheck",
+                    "shfmt",
+                    "tailwindcss",
+                },
             })
         end,
     },
@@ -44,36 +56,6 @@ return {
             require("lsp_signature").setup()
         end,
     },
-    -- {
-    --     url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
-    --     ft = { "python", "cpp", "java" },
-    --     dependencies = {
-    --         "mfussenegger/nvim-jdtls",
-    --         "williamboman/mason.nvim",
-    --     },
-    --     config = function()
-    --         require("sonarlint").setup({
-    --             server = {
-    --                 cmd = {
-    --                     "sonarlint-language-server",
-    --                     -- Ensure that sonarlint-language-server uses stdio channel
-    --                     "-stdio",
-    --                     "-analyzers",
-    --                     -- paths to the analyzers you need, using those for python and java in this example
-    --                     vim.fn.expand("~/.local/share/nvim/mason/share/sonarlint-analyzers/sonarpython.jar"),
-    --                     vim.fn.expand("~/.local/share/nvim/mason/share/sonarlint-analyzers/sonarcfamily.jar"),
-    --                     vim.fn.expand("~/.local/share/nvim/mason/share/sonarlint-analyzers/sonarjava.jar"),
-    --                 },
-    --             },
-    --             filetypes = {
-    --                 -- Tested and working
-    --                 "python",
-    --                 "cpp",
-    --                 "java",
-    --             },
-    --         })
-    --     end,
-    -- },
     {
         "neovim/nvim-lspconfig",
         config = function()
@@ -153,5 +135,119 @@ return {
             -- Set a vim motion for <Space> + c + <Shift>D to go to where the code/object was declared in the project (class file)
             vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "[C]ode Goto [D]eclaration" })
         end,
+        opts = {
+            servers = {
+                cssls = {},
+                tailwindcss = {
+                    root_dir = function(...)
+                        return require("lspconfig.util").root_pattern(".git")(...)
+                    end,
+                },
+                tsserver = {
+                    root_dir = function(...)
+                        return require("lspconfig.util").root_pattern(".git")(...)
+                    end,
+                    single_file_support = false,
+                    settings = {
+                        typescript = {
+                            inlayHints = {
+                                includeInlayParameterNameHints = "literal",
+                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                includeInlayFunctionParameterTypeHints = true,
+                                includeInlayVariableTypeHints = false,
+                                includeInlayPropertyDeclarationTypeHints = true,
+                                includeInlayFunctionLikeReturnTypeHints = true,
+                                includeInlayEnumMemberValueHints = true,
+                            },
+                        },
+                        javascript = {
+                            inlayHints = {
+                                includeInlayParameterNameHints = "all",
+                                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                                includeInlayFunctionParameterTypeHints = true,
+                                includeInlayVariableTypeHints = true,
+                                includeInlayPropertyDeclarationTypeHints = true,
+                                includeInlayFunctionLikeReturnTypeHints = true,
+                                includeInlayEnumMemberValueHints = true,
+                            },
+                        },
+                    },
+                },
+                html = {},
+                yamlls = {
+                    settings = {
+                        yaml = {
+                            keyOrdering = false,
+                        },
+                    },
+                },
+                lua_ls = {
+                    -- enabled = false,
+                    single_file_support = true,
+                    settings = {
+                        Lua = {
+                            workspace = {
+                                checkThirdParty = false,
+                            },
+                            completion = {
+                                workspaceWord = true,
+                                callSnippet = "Both",
+                            },
+                            misc = {
+                                parameters = {
+                                    -- "--log-level=trace",
+                                },
+                            },
+                            hint = {
+                                enable = true,
+                                setType = false,
+                                paramType = true,
+                                paramName = "Disable",
+                                semicolon = "Disable",
+                                arrayIndex = "Disable",
+                            },
+                            doc = {
+                                privateName = { "^_" },
+                            },
+                            type = {
+                                castNumberToInteger = true,
+                            },
+                            diagnostics = {
+                                disable = { "incomplete-signature-doc", "trailing-space" },
+                                -- enable = false,
+                                groupSeverity = {
+                                    strong = "Warning",
+                                    strict = "Warning",
+                                },
+                                groupFileStatus = {
+                                    ["ambiguity"] = "Opened",
+                                    ["await"] = "Opened",
+                                    ["codestyle"] = "None",
+                                    ["duplicate"] = "Opened",
+                                    ["global"] = "Opened",
+                                    ["luadoc"] = "Opened",
+                                    ["redefined"] = "Opened",
+                                    ["strict"] = "Opened",
+                                    ["strong"] = "Opened",
+                                    ["type-check"] = "Opened",
+                                    ["unbalanced"] = "Opened",
+                                    ["unused"] = "Opened",
+                                },
+                                unusedLocalExclude = { "_*" },
+                            },
+                            format = {
+                                enable = false,
+                                defaultConfig = {
+                                    indent_style = "space",
+                                    indent_size = "2",
+                                    continuation_indent_size = "2",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            setup = {},
+        },
     },
 }
