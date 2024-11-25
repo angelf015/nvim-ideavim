@@ -23,6 +23,7 @@ return {
                     "cssls",
                     "angularls",
                     "tailwindcss",
+                    "eslint",
                 },
             })
         end,
@@ -133,6 +134,7 @@ return {
         opts = {
             servers = {
                 cssls = {},
+                eslint ={},
                 tailwindcss = {
                     root_dir = function(...)
                         return require("lspconfig.util").root_pattern(".git")(...)
