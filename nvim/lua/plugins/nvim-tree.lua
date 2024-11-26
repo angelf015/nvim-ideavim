@@ -10,7 +10,7 @@ return {
             auto_reload_on_write = true,
             sync_root_with_cwd = true,
             view = {
-                relativenumber = true,
+                relativenumber = false,
             },
             renderer = {
                 add_trailing = false,
@@ -59,7 +59,7 @@ return {
                         },
                     },
                 },
-                special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+                special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md", "README.org", "readme.org" },
                 symlink_destination = true,
             },
             update_focused_file = {
